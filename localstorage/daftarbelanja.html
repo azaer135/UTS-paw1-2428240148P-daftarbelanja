@@ -21,15 +21,47 @@
 
         <div class="row" id="list-mhs"></div>
     </div>
+    <script>
+        function simpan(){
+            let barang = document.getElementById('Barang').value;
+            let jumlah = document.getElementById('Jumlah').value;
+            let image = document.getElementById('image').value;
 
-  <div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
+            let data = {
+                barang: barang,
+                jumlah: jumlah,
+                image: image
+            }
+
+            let listBelanja = JSON.parse(localStorage.getItem('listBelanja')) || [];
+            listBelanja.push(data);
+            localStorage.setItem('listBelanja', JSON.stringify(listBelanja));
+            tampilkanData();
+        }
+
+        function tampilkanData(){
+            let listBelanja = JSON.parse(localStorage.getItem('listBelanja')) || [];
+            let html = '';
+            listBelanja.forEach((item, index) => {
+                html += `
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <img src="${item.image}" class="card-img-top" alt="${item.barang}">
+                            <div class="card-body">
+                                <h5 class="card-title">${item.barang}</h5>
+                                <p class="card-text">Jumlah: ${item.jumlah}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('list-mhs').innerHTML = html;
+        }
+
+        // Tampilkan data saat halaman dimuat
+        tampilkanData();
+    </script>
+<img src="image1.jpg" class="rounded float-start" alt="...">
+<img src="image2.jpg" class="rounded float-end" alt="...">
 </body>
 </html>
